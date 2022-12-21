@@ -1,23 +1,34 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var user = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  user_id: {
+    type: String,
+    require: true,
+    unique: true,
+  },
 });
 
 mongoose.models = {};
 
-var User = mongoose.model('User', user);
+var User = mongoose.model("User", user);
 
-export default User;
+
+module.exports= User
