@@ -3,7 +3,7 @@ import io from 'Socket.IO-client'
 let socket
 
 export default function Home() {
-  useEffect(() => socketInitializer(), [])
+  useEffect(() => {socketInitializer()}, [])
 
   const socketInitializer = async () => {
     await fetch('/api/socket')
