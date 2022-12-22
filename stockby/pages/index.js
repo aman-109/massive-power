@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { Watchlist } from "./watchlist";
 import Navbar from "../Components/nav";
+import DisplayData from "../Page-Section/body";
 // let socket;
 
 
@@ -45,6 +46,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <DisplayData/>
+      
       <h1 >{Message}</h1>
     </>
   );
