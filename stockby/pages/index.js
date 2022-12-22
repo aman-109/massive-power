@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import io from "socket.io-client";
-
-let socket;
+import { useEffect } from 'react'
+import io from 'Socket.IO-client'
+import { Watchlist } from '../component-vh/watchlist'
 
 export default function Home() {
   useEffect(() => {
@@ -19,7 +18,7 @@ export default function Home() {
   };
   return (
     <>
-      <h1>Homepage</h1>
+       <Watchlist/>
     </>
   );
 }
