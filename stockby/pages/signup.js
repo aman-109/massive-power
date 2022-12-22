@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   Box,
   Button,
@@ -15,27 +18,38 @@ let init = {
   age: "",
 };
 
+let userSignup = async (data) => {
+  let res = await axios.post("/api/user/signup", data);
+  return res.data;
+};
+
 export default function signup() {
   const [state, setState] = useState(init);
-  const [isDisabled, setDis] = useState(true);
-
+  const router = useRouter();
+  //On Change function
   let handleChange = (e) => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
-
-    if (
-      state.email == "" ||
-      state.password == "" ||
-      state.name == "" ||
-      state.age == ""
-    ) {
-      setDis(true);
-    } else {
-      setDis(false);
-    }
   };
-  let handleClick = (data) => {
-    console.log(data);
+  // Click function
+  let handleClick = async (data) => {
+    if (
+      data.email == "" ||
+      data.password == "" ||
+      data.name == "" ||
+      data.age == ""
+    ) {
+      return alert("Please enter all details");
+    }
+    let res = await userSignup(data);
+    console.log(res);
+    if (res.status === false) {
+      alert(res.message);
+    } else {
+      alert(res.message);
+      router.push("/login");
+    }
+    setState(init);
   };
   let { email, password, name, age } = state;
   return (
@@ -63,7 +77,10 @@ export default function signup() {
           Create your StockBy account
         </Text>
         <Text fontSize={"md"}>
-          Already have an account?<span> Log In.</span>
+          Already have an account?
+          <span style={{ color: "#e03030" }}>
+            <Link href="/login"> Log In.</Link>
+          </span>
         </Text>
       </Box>
       <Box>
@@ -117,7 +134,6 @@ export default function signup() {
               borderRadius="none"
               bg={"#e03030"}
               color="white"
-              disabled={isDisabled}
             >
               Submit
             </Button>

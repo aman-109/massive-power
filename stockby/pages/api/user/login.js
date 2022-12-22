@@ -24,17 +24,21 @@ const handler = async (req, res) => {
           refreshToken_secret,
           { expiresIn: "28 days" }
         );
-        setCookie("token", token,{req,res});
-        setCookie("refreshToken", refreshToken,{req,res});
+        setCookie("token", token, { req, res });
+        setCookie("refreshToken", refreshToken, { req, res });
         return res.status(200).send({ status: true, token, refreshToken });
       } else {
-        return res.status(401).send("wrong password");
+        return res
+          .status(200)
+          .send({ status: false, message: "wrong password" });
       }
     } else {
-      return res.status(401).send("user not found");
+      return res.status(200).send({ status: false, message: "user not found" });
     }
   } else {
-    res.status(422).send("req_method_not_supported");
+    res
+      .status(200)
+      .send({ status: false, message: "req_method_not_supported" });
   }
 };
 

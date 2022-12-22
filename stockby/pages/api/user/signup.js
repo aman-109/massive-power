@@ -55,10 +55,17 @@ const handler = async (req, res) => {
     const { email, name, age, password } = req.body;
     let ur = await User.findOne({ email: email });
     if (ur) {
-      return res.status(400).send("user alredy exist");
+      return res.status(200).send({status: false, message:"user alredy exist"});
     }
     let otp = generateOTP();
     let hash = await argon2.hash(password);
+
+    let mail = await sendMail({ to: email, UID: otp });
+    if (mail === false) {
+      return res
+        .status(200)
+        .send({ status: false, message: "cant able to send mail" });
+    }
 
     let user = await User.create({
       name,
@@ -68,16 +75,16 @@ const handler = async (req, res) => {
       user_id: otp,
     });
     if (user) {
-      let mail = await sendMail({ to: user.email, UID: user.user_id });
-      if (mail === false) {
-        return res.status(401).send("cant able to send mail");
-      }
-      return res.status(200).send("check your email for user ID");
+      return res
+        .status(200)
+        .send({ status: true, message: "check your email for user ID" });
     } else {
-      return res.status(401).send("something went wrong");
+      return res
+        .status(200)
+        .send({ status: false, message: "something went wrong" });
     }
   } else {
-    res.status(422).send("req_method_not_supported");
+    res.status(200).send({ status: false, message: "req_method_not_supported" });
   }
 };
 
