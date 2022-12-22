@@ -1,24 +1,51 @@
-import { useEffect } from 'react'
-import io from 'Socket.IO-client'
-import { Watchlist } from '../component-vh/watchlist'
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+import { Watchlist } from "./watchlist";
+import Navbar from "../Components/nav";
+// let socket;
+
+
+function useSocket(url) {
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    fetch(url).finally(() => {
+      const socketio = io();
+      socketio.on('connect', () => {
+        console.log('hii');
+        socketio.emit('hello');
+      });
+      // socketio.on('disconnect', () => {
+      //   console.log('disconnect');
+      // });
+      setSocket(socketio);
+    });
+    // function cleanup() {
+    //   socket.disconnect();
+    // }
+    // return cleanup;
+  }, []);
+  return socket;
+}
 
 export default function Home() {
+  const socket = useSocket('/api/socketio');
+  console.log(socket)
+  const [Message,setMessage]=useState('')
   useEffect(() => {
-    socketInitializer();
-  }, []);
-
-  const socketInitializer = async () => {
-    await fetch("/api/socket");
-    socket = io();
-
-    socket.on("connect", () => {
-      console.log("connected");
-    });
-    socket.emit("get", "hii");
-  };
+    if (socket) {
+      socket.on('hello', data => {
+        console.log('hello', data);
+        setMessage(data);
+      });
+      // socket.on('a user connected', () => {
+      //   setUser('a user connected');
+      // });
+    }
+  }, [socket]);
   return (
     <>
-       <Watchlist/>
+      <Navbar />
+      <h1 >{Message}</h1>
     </>
   );
 }

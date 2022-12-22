@@ -15,12 +15,12 @@ const handler = async (req, res) => {
     if (user) {
       if (await argon2.verify(user.password, password)) {
         let token = jwt.sign(
-          { email: user.email, name: user.name, age: user.age },
+          { email: user.email, name: user.name, age: user.age, username:user.user_id },
           token_secret,
           { expiresIn: "7 days" }
         );
         let refreshToken = jwt.sign(
-          { email: user.email, name: user.name, age: user.age },
+          { email: user.email, name: user.name, age: user.age,username:user.user_id },
           refreshToken_secret,
           { expiresIn: "28 days" }
         );
