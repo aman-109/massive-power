@@ -2,17 +2,20 @@ import {Box,Flex,IconButton,useDisclosure,Stack,Text,Image, Tooltip, Button} fro
 import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons';
 import {FaUserCircle} from "react-icons/fa"
 import{BsCartCheckFill}from "react-icons/bs"
-import { getCookie, getCookies } from 'cookies-next';
+import { deleteCookie, getCookie, getCookies } from 'cookies-next';
 // import{Link}from "@chakra-ui/react"
 import Link from "next/link"
 import { useState } from 'react';
+import{useRouter} from "next/router";
 export default function Navbar( ) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    
+    const router =useRouter()
   let Token=(getCookie("token"));
   var jwt = require("jsonwebtoken");
   var decode = jwt.decode(Token)
   const handleLogout=()=>{
+    deleteCookie("token")
+    router.push("/login");
   }
   console.log(decode)
     return (
@@ -30,8 +33,8 @@ export default function Navbar( ) {
                <Flex width={{base : "", md  : '60%', lg :'40%'}} justifyContent='space-around' fontSize='16px' alignItems='center'>
                <Tooltip bg='black' color='white' label='Buy'><Link href='/buystocks'><Text>BUY STOCKS</Text></Link></Tooltip>
                <Tooltip bg='black' color='white' label='Stocks'><Link href='/watchlist'><Text>STOCKS</Text></Link></Tooltip>
-               <Tooltip bg='black' color='white' label='Sign Up'><Link href='/signup'><Text>SIGN UP</Text></Link></Tooltip>
-               <Tooltip bg='black' color='white' label='Cart'><Link href="#"><Text fontSize='25px'><BsCartCheckFill/></Text></Link></Tooltip>
+               {decode?<Button onClick={handleLogout}>Lugout</Button>:<Tooltip bg='black' color='white' label='Sign Up'><Link href='/signup'><Text>SIGN UP</Text></Link></Tooltip>}
+               <Tooltip bg='black' color='white' label='Cart'><Link href="/cart"><Text fontSize='25px'><BsCartCheckFill/></Text></Link></Tooltip>
               <Tooltip bg='black' color='white' label={decode?decode.name:'Profile'}><Link href="#"><Text fontSize='25px'><FaUserCircle/></Text></Link></Tooltip>
               </Flex>
               </Flex>
