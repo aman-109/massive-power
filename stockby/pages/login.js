@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -8,6 +11,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+let userLogin = async (data) => {
+  let res = await axios.post("/api/user/login", data);
+  return res.data;
+};
+
 let init = {
   user_id: "",
   password: "",
@@ -15,20 +23,25 @@ let init = {
 
 export default function login() {
   const [state, setState] = useState(init);
-  const [isDisabled, setDis] = useState(true);
+  const router = useRouter();
 
   let handleChange = (e) => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
-
-    if (state.user_id == "" || state.password == "") {
-      setDis(true);
-    } else {
-      setDis(false);
-    }
   };
-  let handleClick = (data) => {
-    console.log(data);
+  let handleClick = async (data) => {
+    if (data.user_id == "" || data.password == "") {
+      return alert("Please enter all details");
+    }
+
+    let res = await userLogin(data);
+    if (res.status === false) {
+      alert(res.message);
+    } else {
+      alert("login successfull");
+      router.push("/");
+    }
+    setState(init);
   };
 
   let { user_id, password } = state;
@@ -57,7 +70,10 @@ export default function login() {
           Log in to your StockBy account
         </Text>
         <Text fontSize={"md"}>
-          Don't have an account?<span> Sign up.</span>
+          Don't have an account?
+          <span style={{ color: "#e03030" }}>
+            <Link href="/signup"> Sign up.</Link>
+          </span>
         </Text>
       </Box>
       <Box>
@@ -92,7 +108,6 @@ export default function login() {
               borderRadius="none"
               bg={"#e03030"}
               color="white"
-              disabled={isDisabled}
             >
               Submit
             </Button>
