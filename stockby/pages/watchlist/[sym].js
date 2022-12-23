@@ -46,25 +46,29 @@ import Navbar from "../../Components/nav";
     const handleBuying=async(el,total)=>{
       let {companyName,symbol,image,price}=el
       let buyObj={quantity:buyqty,name:companyName,image:image,symbol:symbol,price:price,total_price:total}
-      
-      // let res=await axios("/api/buy-stock",ele)
-      console.log(buyObj)
+      try{
+        let res=await axios.post("/api/buy-stock",buyObj)
+        if(res.data.status){
+          router.push("/portfolio")
+        }
+        
+      }
+      catch(e){
+        console.log(e)
+      }
+      // console.log(buyObj)
     }
+    // console.log(data)
 
-    // useEffect(()=>{
-    //     getProfile(router.query.sym).then((res)=>setStock(res.data))
-    //     router.refresh()
-    // },[])
-    // console.log(stock)
     return (
       <>
       <Navbar/>
     
-            <Box bg="rgb(248 250 253)">
+            <Box bg="#23242A" color="white">
         <Container
-          mt={50}
+          // mt={50}
           maxW={{ base: "container.sm", md: "container.md", lg: "container.xl" }}
-          border="1px solid"
+          // border="1px solid"
         >
           {/* Breadcrumb */}
   
@@ -85,7 +89,7 @@ import Navbar from "../../Components/nav";
                 }}
               >
                 {/* Stock price details */}
-                <Box border={"1px solid red"}>
+                <Box >
                   <Box p={"10px 0px"}>
                     <Heading as="h2" size={{ base: "md", md: "md", lg: "md" }}>
                       {ele.symbol} {ele.companyName} 
@@ -97,7 +101,7 @@ import Navbar from "../../Components/nav";
                     </Heading>
                   </Box>
                   <Box
-                    border="1px solid teal"
+                    // border="1px solid teal"
                     width="fit-content"
                     display="flex"
                     gap="10px"
@@ -107,6 +111,7 @@ import Navbar from "../../Components/nav";
                       size="sm"
                       _hover="none"
                       border="1px solid gray"
+                      bg="none"
                       width="fit-content"
                       onClick={() => setLiked(!liked)}
                     >
@@ -125,6 +130,7 @@ import Navbar from "../../Components/nav";
                       size="sm"
                       _hover="none"
                       border="1px solid gray"
+                      bg="none"
                       width="fit-content"
                     >
                       <IoMdNotificationsOutline
@@ -156,7 +162,7 @@ import Navbar from "../../Components/nav";
                       lg: "repeat(2,1fr)",
                     }}
                   >
-                    <Box border="1px solid blue">
+                    <Box >
                       <Box
                         p={2}
                         borderBottom={"1px solid #e5e7eb"}
@@ -198,7 +204,7 @@ import Navbar from "../../Components/nav";
                         <Text fontSize={!smallScreen ? "xs" : "md"}>$3,55,22,34,567</Text>
                       </Box>
                     </Box>
-                    <Box border="1px solid blue">
+                    <Box >
                       <Box
                         p={2}
                         borderBottom={"1px solid #e5e7eb"}
@@ -240,13 +246,13 @@ import Navbar from "../../Components/nav";
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4}>
-                        <Box border={"1px solid red"}>
+                        <Box >
                           <Box
                             display="flex"
                             justifyContent={"space-around"}
                             alignItems="center"
                           >
-                            <Box border={"1px solid"}>
+                            <Box >
                               <Button
                                onClick={onOpen}
                                ref={btnRef}
@@ -284,7 +290,7 @@ import Navbar from "../../Components/nav";
         </DrawerContent>
       </Drawer>
                             </Box>
-                            <Box border={"1px solid"}>
+                            <Box >
                               <Button
                                 rightIcon={<BsChevronDown />}
                                 colorScheme={"blue"}
@@ -301,7 +307,7 @@ import Navbar from "../../Components/nav";
                     <Box p={4} display={"flex"} alignItems="center" justifyContent="space-between">
                       <Text fontSize={!smallScreen ? "sm" : "md"}>Website</Text>
                       <Button colorScheme={"blue"} size={{ base: "sm", md: "md", lg: "md" }}>
-                       {ele.website}
+                       {ele.website&&ele.website}
                       </Button>
                     </Box>
                     <Box p={4} display={"flex"} alignItems="center" justifyContent="space-between">
@@ -319,13 +325,13 @@ import Navbar from "../../Components/nav";
                         </Box>
                       </AccordionPanel>
                     </AccordionItem>
-                  </Accordion>) : (<Box border={"1px solid red"}>
+                  </Accordion>) : (<Box >
                     <Box
                       display="flex"
                       justifyContent={"space-around"}
                       alignItems="center"
                     >
-                      <Box border={"1px solid"}>
+                      <Box >
                         <Button
                         onClick={onOpen}
                         ref={btnRef}
@@ -363,7 +369,7 @@ import Navbar from "../../Components/nav";
         </DrawerContent>
       </Drawer>
                       </Box>
-                      <Box border={"1px solid"}>
+                      <Box >
                         <Button
                         onClick={onOpen}
                         ref={btnRef}
@@ -381,9 +387,9 @@ import Navbar from "../../Components/nav";
                     </Box>
                     <Box p={4} display={"flex"} alignItems="center" justifyContent="space-between">
                       <Text fontSize={!smallScreen ? "sm" : "md"}>Website</Text>
-                      <Button colorScheme={"blue"} size={{ base: "sm", md: "md", lg: "md" }}>
-                       {ele.website}
-                      </Button>
+                      {ele.website && <Button colorScheme={"blue"} size={{ base: "sm", md: "md", lg: "md" }}>
+                       {ele.website&&ele.website}
+                      </Button>}
                     </Box>
                     <Box p={4} display={"flex"} alignItems="center" justifyContent="space-between">
                       <Text fontSize={!smallScreen ? "sm" : "md"}>Exchange</Text>
@@ -406,7 +412,7 @@ import Navbar from "../../Components/nav";
     
               {/* Chart details */}
     
-                <Box p={2} border="1px solid teal">
+                <Box p={2}>
                         <TabComponent StockData={router.query.sym}/>
                 </Box>
     
@@ -426,8 +432,10 @@ import Navbar from "../../Components/nav";
 
   export async function getServerSideProps(context) {
     const {sym}=context.query
+    // console.log(sym)
     const res = await fetch(`https://financialmodelingprep.com/api/v3/profile/${sym}?apikey=d19b0221790b4f7e16f9c579b5a01c7c`);
     const data = await res.json();
+    // console.log(data)
     return {
       props: { data },
     };

@@ -1,16 +1,23 @@
-import {Box,Flex,IconButton,useDisclosure,Stack,Text,Image, Tooltip} from '@chakra-ui/react';
+import {Box,Flex,IconButton,useDisclosure,Stack,Text,Image, Tooltip, Button} from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons';
 import {FaUserCircle} from "react-icons/fa"
+import{BsCartCheckFill}from "react-icons/bs"
 import { getCookie, getCookies } from 'cookies-next';
 // import{Link}from "@chakra-ui/react"
 import Link from "next/link"
+import { useState } from 'react';
 export default function Navbar( ) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     
-// console.log(getCookie("token"));
+  let Token=(getCookie("token"));
+  var jwt = require("jsonwebtoken");
+  var decode = jwt.decode(Token)
+  const handleLogout=()=>{
+  }
+  // console.log(decode)
     return (
       <>
-        <Box px={4} mb={20} className='ChackraNavBar' shadow='lg' padding='10px' bgColor={"lightblue"}>
+        <Box px={4}  className='ChackraNavBar' shadow='lg' padding='10px' bgColor={"lightblue"}>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton color='black' size='md' bg='white' icon={isOpen ? <CloseIcon /> : <HamburgerIcon fontSize='30px'/>} aria-label='Open Menu' display={{ md: 'none' }} onClick={isOpen ? onClose : onOpen}/>
               
@@ -24,7 +31,8 @@ export default function Navbar( ) {
                <Tooltip bg='black' color='white' label='Buy'><Link href='/buystocks'><Text>BUY STOCKS</Text></Link></Tooltip>
                <Tooltip bg='black' color='white' label='Stocks'><Link href='/watchlist'><Text>STOCKS</Text></Link></Tooltip>
                <Tooltip bg='black' color='white' label='Sign Up'><Link href='/signup'><Text>SIGN UP</Text></Link></Tooltip>
-              <Tooltip bg='black' color='white' label='Profile'><Link href="#"><Text fontSize='25px'><FaUserCircle/></Text></Link></Tooltip>
+               <Tooltip bg='black' color='white' label='Cart'><Link href="#"><Text fontSize='25px'><BsCartCheckFill/></Text></Link></Tooltip>
+              <Tooltip bg='black' color='white' label={decode?decode.name:'Profile'}><Link href="#"><Text fontSize='25px'><FaUserCircle/></Text></Link></Tooltip>
               </Flex>
               </Flex>
           </Flex> 

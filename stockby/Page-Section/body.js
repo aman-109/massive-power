@@ -12,10 +12,10 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import Navbar from "../Components/nav";
+// import Navbar from "../Components/nav";
 import Footer from "../Components/footer";
 import MyCarousal from "../Components/caraosal";
-import GridBlurredBackdrop from "../Home/testimonial";
+import GridBlurredBackdrop from"../Components/testimonial";
 
 const DisplayData = () => {
   const [data, setData] = useState([]);
@@ -60,7 +60,7 @@ const DisplayData = () => {
         }
         height={"400px"}
       >
-        <Navbar />
+        {/* <Navbar /> */}
       </Box>
       <Box bgColor={"lightgreen"}>
         <TableContainer

@@ -23,21 +23,21 @@ const HistoricalData = ({map}) => {
     },[])
     // console.log(data.slice(0,20))
   return (
-    <Box border="1px solid">
+    <Box >
          <Box p={4} display={"flex"} alignItems="center" justifyContent="space-between">
                       <Text fontSize={!smallScreen ? "md" : "xl"}>Historical Data</Text>
          </Box>
 
          {/* Table History */}
-         <Box border="1px solid red">
+         <Box >
          <TableContainer>
-  <Table variant='striped' colorScheme='teal'>
+  <Table variant='striped' colorScheme='teal' color="red.300">
     <Thead>
       <Tr>
-        <Th> Date</Th>
-        <Th >Volume</Th>
-        <Th >Open</Th>
-        <Th >Close</Th>
+        <Th color="white"> Date</Th>
+        <Th color="white" >Volume</Th>
+        <Th color="white" >Open</Th>
+        <Th color="white" >Close</Th>
       </Tr>
     </Thead>
     <Tbody>

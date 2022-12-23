@@ -1,36 +1,37 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-var user = new Schema({
+var st = new Schema({
   name: {
     type: String,
     required: true,
   },
-  email: {
+  symbol: {
     type: String,
     required: true,
     unique: true,
   },
-  password: {
+  image: {
     type: String,
     required: true,
   },
-  age: {
+  quantity: {
     type: Number,
     required: true,
   },
-  user_id: {
-    type: String,
+  price: {
+    type: Number,
     require: true,
-    unique: true,
   },
-  purchased_stock: [
-    { stock_id: { type: mongoose.Schema.Types.ObjectId, ref: "Stock" } },
-  ],
+  total_price: {
+    type: Number,
+    require: true,
+  },
+  buyers: [{ buyer_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" } }],
 });
 
 mongoose.models = {};
 
-var User = mongoose.model("User", user);
+var Stock = mongoose.model("Stock", st);
 
-module.exports = User;
+module.exports = Stock;

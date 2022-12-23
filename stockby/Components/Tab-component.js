@@ -29,12 +29,12 @@ const TabComponent = ({StockData}) => {
 
     useEffect(() => {
       getData().then((res) => {
+        console.log(res)
         let x = res.data.historical.map((el) => {
           let myDate = el.date.split("-");
           let newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
           return [newDate.getTime(), el.close];
         });
-       
         setData(x)
       })
     }, []);
