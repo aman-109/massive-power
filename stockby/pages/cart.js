@@ -1,5 +1,5 @@
 import NavLink from "../Components/Utils/navlink"
-import { Box, Divider, Flex, Spacer, Stack } from '@chakra-ui/react'
+import { Box, Divider, Flex, Heading, Spacer, Stack, Text } from '@chakra-ui/react'
 import {
   FaRegBell,
   FaRegChartBar,
@@ -9,14 +9,20 @@ import {
   FaUser,
 } from 'react-icons/fa'
 import { getCookie, getCookies } from 'cookies-next';
+import Navbar from "../Components/nav";
+
 
 const cart = () => {
   let Token=(getCookie("token"));
   var jwt = require("jsonwebtoken");
   var decode = jwt.decode(Token)
+  console.log(decode)
+  
   return (
     <>
+    <Navbar/>
      <Flex
+      bgColor={"blue.300"}
       height="100vh"
       width={{
         base: 'full',
@@ -31,9 +37,9 @@ const cart = () => {
       </Box>
       <Stack spacing={6}>
         <Stack>
-          <NavLink label="People" icon={FaUser} isActive ></NavLink>
-          <NavLink label="Favorites" icon={FaRegHeart} />
-          <NavLink label="Workflow" icon={FaRegPaperPlane} />
+         {decode?<Heading>{decode.name}</Heading>:<NavLink label="People" icon={FaUser} isActive ></NavLink>}
+          {decode? <Text>{decode.email}</Text>:<NavLink label="Favorites" icon={FaRegHeart} />}
+          {decode?<Text fontSize='3xl'>{decode.username}</Text>:<NavLink label="Workflow" icon={FaRegPaperPlane} />}
           <NavLink label="Statistics" icon={FaRegChartBar} />
         </Stack>
         <Divider />
@@ -43,8 +49,13 @@ const cart = () => {
         </Stack>
       </Stack>
       <Spacer />
-      
+      <Flex>
+      <Text></Text>
+      </Flex>
     </Flex>
+    <Box>
+      
+    </Box>
      
     </>
   )

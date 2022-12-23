@@ -33,7 +33,7 @@ export default function Navbar( ) {
                <Flex width={{base : "", md  : '60%', lg :'40%'}} justifyContent='space-around' fontSize='16px' alignItems='center'>
                <Tooltip bg='black' color='white' label='Buy'><Link href='/buystocks'><Text>BUY STOCKS</Text></Link></Tooltip>
                <Tooltip bg='black' color='white' label='Stocks'><Link href='/watchlist'><Text>STOCKS</Text></Link></Tooltip>
-               {decode?<Button onClick={handleLogout}>Lugout</Button>:<Tooltip bg='black' color='white' label='Sign Up'><Link href='/signup'><Text>SIGN UP</Text></Link></Tooltip>}
+               {decode?<Button bgColor={"#ADD8E6"} onClick={handleLogout}>Logout</Button>:<Tooltip bg='black' color='white' label='Sign Up'><Link href='/signup'><Text>SIGN UP</Text></Link></Tooltip>}
                <Tooltip bg='black' color='white' label='Cart'><Link href="/cart"><Text fontSize='25px'><BsCartCheckFill/></Text></Link></Tooltip>
               <Tooltip bg='black' color='white' label={decode?decode.name:'Profile'}><Link href="#"><Text fontSize='25px'><FaUserCircle/></Text></Link></Tooltip>
               </Flex>
