@@ -38,11 +38,11 @@ const DisplayData = () => {
     setLoading(true);
     await axios
       .get(
-        "https://newsdata.io/api/1/news?apikey=pub_8197fcabafb32999a0cccf108a2141410681&category=business&language=en"
+        "https://newsapi.org/v2/everything?q=tesla&from=2022-11-23&sortBy=publishedAt&apiKey=9066ba643db0428fa5f1062abcb897f0"
       )
       .then((res) => {
-        console.log(res.data.results);
-        setData(res.data.results);
+        console.log(res.data.articles);
+        setData(res.data.articles);
         setLoading(false);
       });
   };

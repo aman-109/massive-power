@@ -35,74 +35,37 @@ import {
   Textarea,
   Image,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-//import io from "socket.io-client";
 import { AddIcon, UpDownIcon, MinusIcon } from "@chakra-ui/icons";
-import { React, useRef } from "react";
+import { React, useEffect, useRef, useState } from "react";
 
-// function useSocket() {
-//   const [socket, setSocket] = useState(null);
-//   useEffect(() => {
-//     fetch('/api/socket').finally(() => {
-//       const socketio = io();
-//       socketio.on('connect', () => {
-//         console.log('hii');
-//         socketio.emit('hello');
-//         socketio.emit('aman',"mate");
-//       });
-//       // socketio.on('disconnect', () => {
-//       //   console.log('disconnect');
-//       // });
-//       setSocket(socketio);
-//     });
-//     // function cleanup() {
-//     //   socket.disconnect();
-//     // }
-//     // return cleanup;
-//   }, []);
-//   return socket;
-// }
-
+import { useRouter } from "next/router";
+import axios from "axios";
+import Navbar from "../../Components/nav";
 export default function Watchlist() {
-  //const socket = useSocket();
-  const [change , setChange] = useState(0);
-  const [changes , setChanges] = useState(0);
+  const [change, setChange] = useState(0);
+  const [changes, setChanges] = useState(0);
   const [value, setValue] = useState(0);
   const [Bank, setBank] = useState(0);
-  const [get, setGet] = useState([]);
-  const [Message, setMessage] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
-  // useEffect(() => {
-  //   if (socket) {
-  //     socket.on('data',(d)=>{
-  //       //console.log(d);
-  //       setData(d)
-  //     })
-  //     socket.on('hello', data => {
-  //       // console.log('hello', data);
-  //       setMessage(data);
-  //     });
-  //     socket.on('a user connected', () => {
-  //       console.log('a user connected');
-  //     });
-  //   }
-  // }, [socket]);
-  // const getData = async () => {
-  //   let res = await axios(
-  //     "https://financialmodelingprep.com/api/v3/stock/list?apikey=3139067cf0700794db80a5ca039116d6"
-  //   );
-  //   setGet(res.data);
-  //   //return res.data;
-  // };
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  const router = useRouter();
+
+  const [data, setData] = useState([]);
+  // console.log(map)
+
+  useEffect(() => {
+    axios(
+      `https://financialmodelingprep.com/api/v3/stock/list?apikey=d19b0221790b4f7e16f9c579b5a01c7c`
+    ).then((res) => setData(res.data));
+  }, []);
+
+  const handleNavigate = (x) => {
+    router.push(`/watchlist/${x}`);
+  };
 
   const Incount = () => {
     setValue(Math.random() * (17910 - 17580 + 1) + 17580);
-    setChange(Math.random() * (2 - 1.2 + 1) + 1.2)
+    setChange(Math.random() * (2 - 1.2 + 1) + 1.2);
   };
 
   useEffect(() => {
@@ -113,7 +76,7 @@ export default function Watchlist() {
 
   const Oncount = () => {
     setBank(Math.random() * (41810 - 40710 + 1) + 40710);
-    setChanges(Math.random() * (5 - 2.2 + 1) + 1.2)
+    setChanges(Math.random() * (5 - 2.2 + 1) + 1.2);
   };
 
   useEffect(() => {
@@ -124,6 +87,7 @@ export default function Watchlist() {
 
   return (
     <>
+    <Navbar/>
       <Box bg="#23242A" p={5}>
         <Accordion
           defaultIndex={[1]}
@@ -145,17 +109,31 @@ export default function Watchlist() {
               <Text fontSize={35} color="white" fontWeight="bold">
                 Overview
               </Text>
-              <Flex display="flex" flexDirection="row" gap="100px" ml={20} mt={5}>
+              <Flex
+                display="flex"
+                flexDirection="row"
+                gap="100px"
+                ml={20}
+                mt={5}
+              >
                 <Box fontSize={30}>
                   <Text> StockBy 50</Text>
-                  <Text color="red">{value.toFixed(2)}  ({-change.toFixed(2)}%)</Text>
+                  <Text color="red">
+                    {value.toFixed(2)} ({-change.toFixed(2)}%)
+                  </Text>
                 </Box>
                 <Box>
-                  <Image w="14vw" borderRadius="10px" src="https://media.istockphoto.com/id/1309866775/vector/stock-market-graph-background-concept-of-business-investment-stock-future-trading.jpg?s=612x612&w=0&k=20&c=FfY-xJPsLUeEXVxnWiIsBkIHYeElig25rPAzwRdtle4="/>
+                  <Image
+                    w="14vw"
+                    borderRadius="10px"
+                    src="https://media.istockphoto.com/id/1309866775/vector/stock-market-graph-background-concept-of-business-investment-stock-future-trading.jpg?s=612x612&w=0&k=20&c=FfY-xJPsLUeEXVxnWiIsBkIHYeElig25rPAzwRdtle4="
+                  />
                 </Box>
                 <Box fontSize={30}>
                   <Text> StockBy Bank</Text>
-                  <Text color="green">{Bank.toFixed(2)} (+{changes.toFixed(2)}%)</Text>
+                  <Text color="green">
+                    {Bank.toFixed(2)} (+{changes.toFixed(2)}%)
+                  </Text>
                 </Box>
               </Flex>
             </AccordionPanel>
@@ -211,12 +189,12 @@ export default function Watchlist() {
                 <Th color="white">
                   Stock Name <UpDownIcon />
                 </Th>
-                <Th color="white">
-                  % change <UpDownIcon />
-                </Th>
-                <Th color="white">
-                  market cap <UpDownIcon />
-                </Th>
+                {/* <Th color="white">
+                    % change <UpDownIcon />
+                  </Th> */}
+                {/* <Th color="white">
+                    market cap <UpDownIcon />
+                  </Th> */}
                 <Th color="white">
                   Price <UpDownIcon />
                 </Th>
@@ -228,36 +206,40 @@ export default function Watchlist() {
                 </Th>
               </Tr>
             </Thead>
-            {/* {get?.map((el) => ( */}
-
             <Tbody>
-              <Tr>
-                <Td color="#496AA0">el.symbol</Td>
-                <Td color="#496AA0">el.name</Td>
-                <Td>2.5</Td>
-                <Td>25M</Td>
-                <Td>el.price</Td>
-                <Td>
-                  <RangeSlider
-                    defaultValue={[0, 140]}
-                    min={0}
-                    max={200}
-                    step={20}
-                    w="80%"
+              {data?.slice(0, 20).map((ele) => (
+                <Tr>
+                  <Td
+                    onClick={() => handleNavigate(ele.symbol)}
+                    color="#496AA0"
                   >
-                    <RangeSliderTrack bg="red.100">
-                      <RangeSliderFilledTrack bg="green" />
-                    </RangeSliderTrack>
+                    {ele.symbol}
+                  </Td>
+                  <Td color="#496AA0">{ele.name}</Td>
+                  {/* <Td>2.5</Td>
+                  <Td>25M</Td> */}
+                  <Td>$ {ele.price}</Td>
+                  <Td>
+                    <RangeSlider
+                      defaultValue={[0, 140]}
+                      min={0}
+                      max={200}
+                      step={20}
+                      w="80%"
+                    >
+                      <RangeSliderTrack bg="red.100">
+                        <RangeSliderFilledTrack bg="green" />
+                      </RangeSliderTrack>
 
-                    <RangeSliderThumb boxSize={6} index={1} bg="#FF0000" />
-                  </RangeSlider>
-                  <Flex display="flex" flexDirection="row" gap={50}>
-                    <Text color="green">100</Text>
-                    <Text color="green"> 110.5</Text>
-                  </Flex>
-                </Td>
-                <Td isNumeric color="white">
-                  {/* <Button
+                      <RangeSliderThumb boxSize={6} index={1} bg="#FF0000" />
+                    </RangeSlider>
+                    <Flex display="flex" flexDirection="row" gap={50}>
+                      <Text color="green">0</Text>
+                      <Text color="green">{ele.price}</Text>
+                    </Flex>
+                  </Td>
+                  <Td isNumeric color="white">
+                    {/* <Button
                       colorScheme="teal"
                       variant="outline"
                       _hover={{ backgroundColor: "grey", color: "white" }}
@@ -265,141 +247,125 @@ export default function Watchlist() {
                     >
                       Stock Detail
                     </Button> */}
-                  <Button
-                    leftIcon={<AddIcon />}
-                    colorScheme="teal"
-                    onClick={onOpen}
-                  >
-                    Stock Detail
-                  </Button>
-                  <Drawer
-                    isOpen={isOpen}
-                    placement="right"
-                    bg="#23242A"
-                    initialFocusRef={firstField}
-                    onClose={onClose}
-                  >
-                    <DrawerOverlay />
-                    <DrawerContent>
-                      <DrawerCloseButton bg="#23242A" color="white" />
-                      <DrawerHeader
-                        borderBottomWidth="1px"
-                        bg="#23242A"
-                        color="white"
-                      >
-                        TATASTEEL STOCK
-                      </DrawerHeader>
-
-                      <DrawerBody bg="#23242A" color="white">
-                        <Stack spacing="24px">
-                          <Box>
-                            <FormLabel htmlFor="username">
-                              110.5 (+0.50)
-                            </FormLabel>
-                          </Box>
-                          <Box>
-                            <Image src="https://s3.ap-south-1.amazonaws.com/staticassets.zerodha.net/support-portal/2022/03/14/Article/60O0GK20_heiken_to_candles.gif" />
-                          </Box>
-                          <Box>
-                            <Flex display="flex" flexDirection="row" gap={8}>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={1}
-                              >
-                                <Text>Open</Text>
-                                <Text>105</Text>
-                              </Flex>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={1}
-                              >
-                                <Text>High</Text>
-                                <Text>105</Text>
-                              </Flex>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={1}
-                              >
-                                <Text>Low</Text>
-                                <Text>105</Text>
-                              </Flex>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={1}
-                              >
-                                <Text>Prev.close</Text>
-                                <Text>105</Text>
-                              </Flex>
-                            </Flex>
-                          </Box>
-                          <Box>
-                            <Flex display="flex" flexDirection="row" gap={8}>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={2}
-                              >
-                                <Text>Volume</Text>
-                                <Text>Avg. trade price</Text>
-                                <Text>Last traded quantity</Text>
-                                <Text>Lower circuit</Text>
-                                <Text>Upper circuit</Text>
-                              </Flex>
-                              <Flex
-                                display="flex"
-                                flexDirection="column"
-                                gap={2}
-                                textAlign="right"
-                              >
-                                <Text>3,15,51,392</Text>
-                                <Text>107.83</Text>
-                                <Text>200</Text>
-                                <Text>98.50</Text>
-                                <Text>120.30</Text>
-                              </Flex>
-                            </Flex>
-                          </Box>
-                        </Stack>
-                      </DrawerBody>
-
-                      <DrawerFooter
-                        borderTopWidth="1px"
-                        bg="#23242A"
-                        color="white"
-                      >
-                        <Button
-                          variant="outline"
-                          mr={3}
-                          onClick={onClose}
-                          bg="#319795"
+                    <Button
+                      leftIcon={<AddIcon />}
+                      colorScheme="teal"
+                      onClick={onOpen}
+                    >
+                      Stock Detail
+                    </Button>
+                    <Drawer
+                      isOpen={isOpen}
+                      placement="right"
+                      bg="#23242A"
+                      initialFocusRef={firstField}
+                      onClose={onClose}
+                    >
+                      <DrawerOverlay />
+                      <DrawerContent>
+                        <DrawerCloseButton bg="#23242A" color="white" />
+                        <DrawerHeader
+                          borderBottomWidth="1px"
+                          bg="#23242A"
+                          color="white"
                         >
-                          Cancel
-                        </Button>
-                        <Button bg="#319795">View</Button>
-                      </DrawerFooter>
-                    </DrawerContent>
-                  </Drawer>
-                </Td>
-              </Tr>
+                          {ele.name}
+                        </DrawerHeader>
+
+                        <DrawerBody bg="#23242A" color="white">
+                          <Stack spacing="24px">
+                            <Box>
+                              <FormLabel htmlFor="username">
+                                {ele.price} (+0.50)
+                              </FormLabel>
+                            </Box>
+                            <Box>
+                              <Flex display="flex" flexDirection="row" gap={8}>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={1}
+                                >
+                                  <Text>Open</Text>
+                                  <Text>105</Text>
+                                </Flex>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={1}
+                                >
+                                  <Text>High</Text>
+                                  <Text>105</Text>
+                                </Flex>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={1}
+                                >
+                                  <Text>Low</Text>
+                                  <Text>105</Text>
+                                </Flex>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={1}
+                                >
+                                  <Text>Prev.close</Text>
+                                  <Text>105</Text>
+                                </Flex>
+                              </Flex>
+                            </Box>
+                            <Box>
+                              <Flex display="flex" flexDirection="row" gap={8}>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={2}
+                                >
+                                  <Text>Volume</Text>
+                                  <Text>Avg. trade price</Text>
+                                  <Text>Last traded quantity</Text>
+                                  <Text>Lower circuit</Text>
+                                  <Text>Upper circuit</Text>
+                                </Flex>
+                                <Flex
+                                  display="flex"
+                                  flexDirection="column"
+                                  gap={2}
+                                  textAlign="right"
+                                >
+                                  <Text>3,15,51,392</Text>
+                                  <Text>107.83</Text>
+                                  <Text>200</Text>
+                                  <Text>98.50</Text>
+                                  <Text>120.30</Text>
+                                </Flex>
+                              </Flex>
+                            </Box>
+                          </Stack>
+                        </DrawerBody>
+
+                        <DrawerFooter
+                          borderTopWidth="1px"
+                          bg="#23242A"
+                          color="white"
+                        >
+                          <Button
+                            variant="outline"
+                            mr={3}
+                            onClick={onClose}
+                            bg="#319795"
+                          >
+                            Cancel
+                          </Button>
+                          <Button bg="#319795">View</Button>
+                        </DrawerFooter>
+                      </DrawerContent>
+                    </Drawer>
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
-            {/* ))} */}
-            <Tfoot>
-              <Tr>
-                <Th color="white">Symbol</Th>
-                <Th color="white">Stock Name</Th>
-                <Th color="white">% change</Th>
-                <Th color="white">market cap</Th>
-                <Th color="white">price</Th>
-                <Th color="white">52 weeks Range</Th>
-                <Th isNumeric color="white">
-                  Stock Details
-                </Th>
-              </Tr>
-            </Tfoot>
           </Table>
         </TableContainer>
         <Text fontSize={30} color="white" mt={10} textAlign="center">
