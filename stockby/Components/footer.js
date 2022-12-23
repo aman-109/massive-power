@@ -13,7 +13,7 @@ export default function Footer ( ) {
                   <Text _hover={{ cursor : 'pointer'}}>+91 9533952918</Text>
                   <Text _hover={{ cursor : 'pointer'}}>+91 9370455033 </Text>
                   <Text _hover={{ cursor : 'pointer'}}>+91 8390345989</Text>
-                  <Text _hover={{ cursor : 'pointer'}}>+91 0000000000</Text>
+                  <Text _hover={{ cursor : 'pointer'}}>+91 9767596241</Text>
                   <Box display='flex' gap='30px' fontSize='30px' mt='20px'>
                     < BsFacebook></BsFacebook>
                     <BsInstagram/>
@@ -27,7 +27,7 @@ export default function Footer ( ) {
                     <ListItem _hover={{ cursor : 'pointer'}}><Link href="https://www.linkedin.com/in/saurabh-kumar-04b00b23a/">Saurabh Kr.</Link></ListItem>
                     <ListItem _hover={{ cursor : 'pointer'}}><Link href="https://www.linkedin.com/in/prasad-karde/">Prasad Karde</Link></ListItem>
                     <ListItem _hover={{ cursor : 'pointer'}}><Link href="https://www.linkedin.com/in/amanmate109/">Aman Mate</Link></ListItem>
-                    <ListItem _hover={{ cursor : 'pointer'}}><Link href="https://www.linkedin.com/in/saurabh-kumar-04b00b23a/">SK</Link></ListItem>
+                    <ListItem _hover={{ cursor : 'pointer'}}><Link href="https://www.linkedin.com/in/vinayak-hiwse-467646219/">Vinayak Hiwse</Link></ListItem>
                    
                 </UnorderedList>
             </Box>
