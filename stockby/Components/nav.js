@@ -17,6 +17,10 @@ export default function Navbar( ) {
     deleteCookie("token")
     router.push("/login");
   }
+  // if(!decode){
+  //   router.push("/login");
+  // }
+
   console.log(decode)
     return (
       <>
@@ -25,7 +29,7 @@ export default function Navbar( ) {
             <IconButton color='black' size='md' bg='white' icon={isOpen ? <CloseIcon /> : <HamburgerIcon fontSize='30px'/>} aria-label='Open Menu' display={{ md: 'none' }} onClick={isOpen ? onClose : onOpen}/>
               
             <Flex width={{base : "20%", md :'13%', lg : '10%'}} justifyContent={'center'} >
-             <Link href="/"><Image src='https://i.ibb.co/0tR2KrT/Whats-App-Image-2022-12-22-at-2-17-13-PM.jpg' width='85px' m='auto'/></Link>
+             <Link href="/"><Image bgColor={"#ADD8E6"} src='https://i.ibb.co/0tR2KrT/Whats-App-Image-2022-12-22-at-2-17-13-PM.jpg'  width='85px' m='auto'/></Link>
             </Flex>
 
               <Flex as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} gap='10px' w={{base : '', md : '90%', lg : '95%'}} justifyContent='space-around' alignItems='center' padding='10px'>
