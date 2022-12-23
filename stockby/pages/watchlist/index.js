@@ -35,10 +35,26 @@ import {
     Textarea,
   } from "@chakra-ui/react";
   import { AddIcon, UpDownIcon,  MinusIcon } from "@chakra-ui/icons";
-  import { React, useRef } from "react";
+  import { React, useEffect, useRef, useState } from "react";
+  import { useRouter } from "next/router";
+import axios from "axios";
   export default function Watchlist ()  {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const firstField = useRef();
+    const router=useRouter()
+
+    const [data,setData]=useState([])
+    // console.log(map)
+
+    useEffect(()=>{
+      axios(`https://financialmodelingprep.com/api/v3/stock/list?apikey=d19b0221790b4f7e16f9c579b5a01c7c`)
+      .then(res=>setData(res.data))
+    },[])
+    
+    const handleNavigate=(x)=>{
+      router.push(`/watchlist/${x}`)
+    }
+    
     return (
       <>
         <Box bg="#23242A" p={5}>
@@ -119,12 +135,12 @@ import {
                   <Th color="white">
                     Stock Name <UpDownIcon />
                   </Th>
-                  <Th color="white">
+                  {/* <Th color="white">
                     % change <UpDownIcon />
-                  </Th>
-                  <Th color="white">
+                  </Th> */}
+                  {/* <Th color="white">
                     market cap <UpDownIcon />
-                  </Th>
+                  </Th> */}
                   <Th color="white">
                     Price <UpDownIcon />
                   </Th>
@@ -137,12 +153,14 @@ import {
                 </Tr>
               </Thead>
               <Tbody>
+                {
+                  data?.slice(0,20).map((ele)=>(
                 <Tr>
-                  <Td color="#496AA0">TATA</Td>
-                  <Td color="#496AA0">TATASTEEL</Td>
-                  <Td>2.5</Td>
-                  <Td>25M</Td>
-                  <Td>110.5</Td>
+                  <Td onClick={()=>handleNavigate(ele.symbol)} color="#496AA0">{ele.symbol}</Td>
+                  <Td color="#496AA0">{ele.name}</Td>
+                  {/* <Td>2.5</Td>
+                  <Td>25M</Td> */}
+                  <Td>$ {ele.price}</Td>
                   <Td>
                     <RangeSlider
                       defaultValue={[0, 140]}
@@ -158,8 +176,8 @@ import {
                       <RangeSliderThumb boxSize={6} index={1} bg="#FF0000" />
                     </RangeSlider>
                     <Flex display="flex" flexDirection="row" gap={50}>
-                      <Text color="green">100</Text>
-                      <Text color="green"> 110.5</Text>
+                      <Text color="green">0</Text>
+                      <Text color="green">{ele.price}</Text>
                     </Flex>
                   </Td>
                   <Td isNumeric color="white">
@@ -193,14 +211,14 @@ import {
                           bg="#23242A"
                           color="white"
                         >
-                          TATASTEEL STOCK
+                          {ele.name}
                         </DrawerHeader>
   
                         <DrawerBody bg="#23242A" color="white">
                           <Stack spacing="24px">
                             <Box>
                               <FormLabel htmlFor="username">
-                                110.5 (+0.50)
+                               {ele.price} (+0.50)
                               </FormLabel>
                             </Box>
                             <Box>
@@ -268,10 +286,7 @@ import {
                               </Flex>
                             </Box>
   
-                            <Box>
-                              <FormLabel htmlFor="desc">Description</FormLabel>
-                              <Textarea id="desc" />
-                            </Box>
+                           
                           </Stack>
                         </DrawerBody>
   
@@ -288,26 +303,17 @@ import {
                           >
                             Cancel
                           </Button>
-                          <Button bg="#319795">Submit</Button>
+                          <Button  bg="#319795">View</Button>
                         </DrawerFooter>
                       </DrawerContent>
                     </Drawer>
                   </Td>
                 </Tr>
+
+                  ))
+                }
               </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Th color="white">Symbol</Th>
-                  <Th color="white">Stock Name</Th>
-                  <Th color="white">% change</Th>
-                  <Th color="white">market cap</Th>
-                  <Th color="white">price</Th>
-                  <Th color="white">52 weeks Range</Th>
-                  <Th isNumeric color="white">
-                    Stock Details
-                  </Th>
-                </Tr>
-              </Tfoot>
+             
             </Table>
           </TableContainer>
           <Text fontSize={30} color="white" mt={10} textAlign="center">

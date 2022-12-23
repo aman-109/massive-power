@@ -17,14 +17,10 @@ export default function Navbar( ) {
     deleteCookie("token")
     router.push("/login");
   }
-  // if(!decode){
-  //   router.push("/login");
-  // }
-
-  console.log(decode)
+  // console.log(decode)
     return (
       <>
-        <Box px={4} mb={20} className='ChackraNavBar' shadow='lg' padding='10px' bgColor={"lightblue"}>
+        <Box px={4}  className='ChackraNavBar' shadow='lg' padding='10px' bgColor={"lightblue"}>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton color='black' size='md' bg='white' icon={isOpen ? <CloseIcon /> : <HamburgerIcon fontSize='30px'/>} aria-label='Open Menu' display={{ md: 'none' }} onClick={isOpen ? onClose : onOpen}/>
               
