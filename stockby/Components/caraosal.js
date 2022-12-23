@@ -42,7 +42,7 @@ export default function MyCarousal ({data}) {
                 >
                 {data.length > 0 && data.map((elem)=>{
                     return <Box key={elem.title} w={{base : '95%'}} m='auto'>
-                        <Image src={elem.image_url} m='auto' draggable="true" width={{base :'150px', md : '200px', lg: '300px'}} h={{base :'80px', md: '120px', lg: '160px'}}/>
+                        <Image src={elem.urlToImage} m='auto' draggable="true" width={{base :'150px', md : '200px', lg: '300px'}} h={{base :'80px', md: '120px', lg: '160px'}}/>
                         <Text align='center' fontSize={{base: '13px', md: '15px'}} fontWeight='550' color={"black"} mt='5px'>{elem.title}</Text>
                         {/* <Text fontSize={{base :'12px', md: '14px'}} m='auto' align='center' mt='5px'>{elem.title}</Text> */}
                     </Box>
