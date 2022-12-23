@@ -1,162 +1,220 @@
 import {
-    Box,
-    Button,
-    Stack,
-    Text,
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    useDisclosure,
-    SimpleGrid,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionIcon,
-    AccordionPanel,
-    RangeSlider,
-    RangeSliderTrack,
-    RangeSliderFilledTrack,
-    RangeSliderThumb,
-    Flex,
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    FormLabel,
-    Textarea,
-  } from "@chakra-ui/react";
-  import { AddIcon, UpDownIcon,  MinusIcon } from "@chakra-ui/icons";
-  import { React, useEffect, useRef, useState } from "react";
-  import { useRouter } from "next/router";
+  Box,
+  Button,
+  Stack,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  useDisclosure,
+  SimpleGrid,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  Flex,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  FormLabel,
+  Textarea,
+  Image,
+} from "@chakra-ui/react";
+import { AddIcon, UpDownIcon, MinusIcon } from "@chakra-ui/icons";
+import { React, useEffect, useRef, useState } from "react";
+
+import { useRouter } from "next/router";
 import axios from "axios";
-  export default function Watchlist ()  {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const firstField = useRef();
-    const router=useRouter()
+import Navbar from "../../Components/nav";
+export default function Watchlist() {
+  const [change, setChange] = useState(0);
+  const [changes, setChanges] = useState(0);
+  const [value, setValue] = useState(0);
+  const [Bank, setBank] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const firstField = useRef();
+  const router = useRouter();
 
-    const [data,setData]=useState([])
-    // console.log(map)
+  const [data, setData] = useState([]);
+  // console.log(map)
 
-    useEffect(()=>{
-      axios(`https://financialmodelingprep.com/api/v3/stock/list?apikey=d19b0221790b4f7e16f9c579b5a01c7c`)
-      .then(res=>setData(res.data))
-    },[])
-    
-    const handleNavigate=(x)=>{
-      router.push(`/watchlist/${x}`)
-    }
-    
-    return (
-      <>
-        <Box bg="#23242A" p={5}>
-          <Accordion
-            defaultIndex={[1]}
-            allowMultiple
-            border="none"
-            m="auto"
-            w="96%"
-          >
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" color="white">
-                    {/* Overview */}
-                  </Box>
-                  <AccordionIcon color="white" fontSize={50} />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} color="white">
-                <Text fontSize={35} color="white" fontWeight="bold">
-                  Overview
-                </Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-          <Text ml={8} fontSize={35} color="white" fontWeight="bold">
-            {/* Watchlists */} Marketwatch
-          </Text>
-  
-          <Box
-            align="left"
-            mt={6}
-            ml={5}
-            w={{ base: "98%", sm: "98%", md: "80%", lg: "55%" }}
-          >
-            <SimpleGrid columns={[2, 3, 4, 5]} spacing="20px">
-              <Button colorScheme="teal" variant="outline" borderRadius={50}>
-                Watchlist 1
-              </Button>
-              <Button colorScheme="teal" variant="outline" borderRadius={50}>
-                Watchlist 2
-              </Button>
-              <Button colorScheme="teal" variant="outline" borderRadius={50}>
-                Watchlist 3
-              </Button>
-              <Button colorScheme="teal" variant="outline" borderRadius={50}>
-                Watchlist 4
-              </Button>
-              <Button
-                colorScheme="teal"
-                variant="outline"
-                borderRadius={50}
-                gap="3px"
-                px="50px"
-                w="200px"
+  useEffect(() => {
+    axios(
+      `https://financialmodelingprep.com/api/v3/stock/list?apikey=d19b0221790b4f7e16f9c579b5a01c7c`
+    ).then((res) => setData(res.data));
+  }, []);
+
+  const handleNavigate = (x) => {
+    router.push(`/watchlist/${x}`);
+  };
+
+  const Incount = () => {
+    setValue(Math.random() * (17910 - 17580 + 1) + 17580);
+    setChange(Math.random() * (2 - 1.2 + 1) + 1.2);
+  };
+
+  useEffect(() => {
+    setInterval(() => {
+      Incount();
+    }, 2000);
+  }, []);
+
+  const Oncount = () => {
+    setBank(Math.random() * (41810 - 40710 + 1) + 40710);
+    setChanges(Math.random() * (5 - 2.2 + 1) + 1.2);
+  };
+
+  useEffect(() => {
+    setInterval(() => {
+      Oncount();
+    }, 2500);
+  }, []);
+
+  return (
+    <>
+    <Navbar/>
+      <Box bg="#23242A" p={5}>
+        <Accordion
+          defaultIndex={[1]}
+          allowMultiple
+          border="none"
+          m="auto"
+          w="96%"
+        >
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex="1" textAlign="left" color="white">
+                  {/* Overview */}
+                </Box>
+                <AccordionIcon color="white" fontSize={50} />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4} color="white">
+              <Text fontSize={35} color="white" fontWeight="bold">
+                Overview
+              </Text>
+              <Flex
+                display="flex"
+                flexDirection="row"
+                gap="100px"
+                ml={20}
+                mt={5}
               >
-                <AddIcon />
-                Create New Watchlist
-              </Button>
-            </SimpleGrid>
-          </Box>
-  
-          <TableContainer w="90vw" margin="auto" mt={10} color="white">
-            <Table variant="simple">
-              <TableCaption color="white">
-                Stock Market Detail Analysis Chart
-              </TableCaption>
-              <Thead>
-                <Tr>
-                  <Th color="white">
-                    Symbol <UpDownIcon />{" "}
-                  </Th>
-                  <Th color="white">
-                    Stock Name <UpDownIcon />
-                  </Th>
-                  {/* <Th color="white">
+                <Box fontSize={30}>
+                  <Text> StockBy 50</Text>
+                  <Text color="red">
+                    {value.toFixed(2)} ({-change.toFixed(2)}%)
+                  </Text>
+                </Box>
+                <Box>
+                  <Image
+                    w="14vw"
+                    borderRadius="10px"
+                    src="https://media.istockphoto.com/id/1309866775/vector/stock-market-graph-background-concept-of-business-investment-stock-future-trading.jpg?s=612x612&w=0&k=20&c=FfY-xJPsLUeEXVxnWiIsBkIHYeElig25rPAzwRdtle4="
+                  />
+                </Box>
+                <Box fontSize={30}>
+                  <Text> StockBy Bank</Text>
+                  <Text color="green">
+                    {Bank.toFixed(2)} (+{changes.toFixed(2)}%)
+                  </Text>
+                </Box>
+              </Flex>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+        <Text ml={8} fontSize={35} color="white" fontWeight="bold">
+          {/* Watchlists */} Marketwatch
+        </Text>
+
+        <Box
+          align="left"
+          mt={6}
+          ml={5}
+          w={{ base: "98%", sm: "98%", md: "80%", lg: "55%" }}
+        >
+          <SimpleGrid columns={[2, 3, 4, 5]} spacing="20px">
+            <Button colorScheme="teal" variant="outline" borderRadius={50}>
+              Watchlist 1
+            </Button>
+            <Button colorScheme="teal" variant="outline" borderRadius={50}>
+              Watchlist 2
+            </Button>
+            <Button colorScheme="teal" variant="outline" borderRadius={50}>
+              Watchlist 3
+            </Button>
+            <Button colorScheme="teal" variant="outline" borderRadius={50}>
+              Watchlist 4
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              borderRadius={50}
+              gap="3px"
+              px="50px"
+              w="200px"
+            >
+              <AddIcon />
+              Create New Watchlist
+            </Button>
+          </SimpleGrid>
+        </Box>
+
+        <TableContainer w="90vw" margin="auto" mt={10} color="white">
+          <Table variant="simple">
+            <TableCaption color="white">
+              Stock Market Detail Analysis Chart
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th color="white">
+                  Symbol <UpDownIcon />{" "}
+                </Th>
+                <Th color="white">
+                  Stock Name <UpDownIcon />
+                </Th>
+                {/* <Th color="white">
                     % change <UpDownIcon />
                   </Th> */}
-                  {/* <Th color="white">
+                {/* <Th color="white">
                     market cap <UpDownIcon />
                   </Th> */}
-                  <Th color="white">
-                    Price <UpDownIcon />
-                  </Th>
-                  <Th color="white">
-                    52 weeks Range <UpDownIcon />
-                  </Th>
-                  <Th isNumeric color="white">
-                    Stock Details <UpDownIcon />
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {
-                  data?.slice(0,20).map((ele)=>(
+                <Th color="white">
+                  Price <UpDownIcon />
+                </Th>
+                <Th color="white">
+                  52 weeks Range <UpDownIcon />
+                </Th>
+                <Th isNumeric color="white">
+                  Stock Details <UpDownIcon />
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data?.slice(0, 20).map((ele) => (
                 <Tr>
-                  <Td onClick={()=>handleNavigate(ele.symbol)} color="#496AA0">{ele.symbol}</Td>
+                  <Td
+                    onClick={() => handleNavigate(ele.symbol)}
+                    color="#496AA0"
+                  >
+                    {ele.symbol}
+                  </Td>
                   <Td color="#496AA0">{ele.name}</Td>
                   {/* <Td>2.5</Td>
                   <Td>25M</Td> */}
@@ -172,7 +230,7 @@ import axios from "axios";
                       <RangeSliderTrack bg="red.100">
                         <RangeSliderFilledTrack bg="green" />
                       </RangeSliderTrack>
-  
+
                       <RangeSliderThumb boxSize={6} index={1} bg="#FF0000" />
                     </RangeSlider>
                     <Flex display="flex" flexDirection="row" gap={50}>
@@ -213,12 +271,12 @@ import axios from "axios";
                         >
                           {ele.name}
                         </DrawerHeader>
-  
+
                         <DrawerBody bg="#23242A" color="white">
                           <Stack spacing="24px">
                             <Box>
                               <FormLabel htmlFor="username">
-                               {ele.price} (+0.50)
+                                {ele.price} (+0.50)
                               </FormLabel>
                             </Box>
                             <Box>
@@ -258,12 +316,11 @@ import axios from "axios";
                               </Flex>
                             </Box>
                             <Box>
-                            <Flex display="flex" flexDirection="row" gap={8}>
+                              <Flex display="flex" flexDirection="row" gap={8}>
                                 <Flex
                                   display="flex"
                                   flexDirection="column"
                                   gap={2}
-                    
                                 >
                                   <Text>Volume</Text>
                                   <Text>Avg. trade price</Text>
@@ -285,11 +342,9 @@ import axios from "axios";
                                 </Flex>
                               </Flex>
                             </Box>
-  
-                           
                           </Stack>
                         </DrawerBody>
-  
+
                         <DrawerFooter
                           borderTopWidth="1px"
                           bg="#23242A"
@@ -303,262 +358,258 @@ import axios from "axios";
                           >
                             Cancel
                           </Button>
-                          <Button  bg="#319795">View</Button>
+                          <Button bg="#319795">View</Button>
                         </DrawerFooter>
                       </DrawerContent>
                     </Drawer>
                   </Td>
                 </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <Text fontSize={30} color="white" mt={10} textAlign="center">
+          Frequently Asked Questions
+        </Text>
+        <Accordion
+          defaultIndex={[1]}
+          allowMultiple
+          border="none"
+          w="85vw"
+          m="auto"
+        >
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      What is a brokerage calculator?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  A brokerage calculator is an online tool aimed to help the
+                  traders/clients know the exact charges that they might incur
+                  when conducting a trade.
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      How is brokerage calculated?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  You will be charged brokerage of ₹20 per order or 2.5%
+                  (whichever is lower) for buying stocks and selling them after
+                  a few days, weeks, or months. This is called an equity
+                  delivery order. These charges will be applicable to all
+                  customers onboarded on or after 21 September 2021. For
+                  equity/commodity/currency futures and options brokerage, you
+                  can refer to our brokerage charges list Chargeslist
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      What are STT charges?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  For equity delivery, STT is 0.1% on both buying & selling of
+                  shares. For equity intraday, STT is 0.1% on both buying &
+                  selling.
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      How to calculate broker commission?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  You will be charged brokerage of ₹20 per order or 2.5%
+                  (whichever is lower) for buying stocks and selling them after
+                  a few days, weeks, or months. This is called an equity
+                  delivery order. These charges will be applicable to all
+                  customers onboarded on or after 21 September 2021. For
+                  equity/commodity/currency futures and options brokerage, you
+                  can refer to our brokerage charges list
+                  https://upstox.com/chargeslist/ For buying and selling stocks
+                  on the same day, known as equity intraday order, you will be
+                  charged brokerage of ₹20 per order or 0.05% (whichever is
+                  lower) for both buy and sell orders. For
+                  equity/commodity/currency futures and options brokerage, you
+                  can refer to our brokerage charges list
+                  https://upstox.com/chargeslist/ In addition to equity delivery
+                  & equity intraday, brokerage for equity futures is ₹20 per
+                  executed order or 0.05% (whichever is lower) and brokerage for
+                  equity options is flat ₹20 per executed order. We do not
+                  charge any commission/brokerage on Mutual Funds and IPO’s.
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      How to calculate delivery charges?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  You will be charged brokerage of ₹20 per order or 2.5%
+                  (whichever is lower) for buying stocks and selling them after
+                  a few days, weeks, or months. This is called an equity
+                  delivery order. These charges will be applicable to all
+                  customers onboarded on or after 21 September 2021. For
+                  equity/commodity/currency futures and options brokerage, you
+                  can refer to our brokerage charges list –
+                  https://upstox.com/chargeslist/
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem>
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      color="white"
+                      fontSize={20}
+                    >
+                      What are state stamp duty charges?
+                    </Box>
+                    {isExpanded ? (
+                      <MinusIcon fontSize="20px" color="white" />
+                    ) : (
+                      <AddIcon fontSize="20px" color="white" />
+                    )}
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4} color="black" bg="white">
+                  For equity delivery, stamp duty charges are 0.015% or ₹1500 /
+                  crore on the buy side. For equity intraday, stamp duty charges
+                  are 0.003% or ₹300 / crore on the buy side. For equity
+                  futures, stamp duty charges are 0.002% or ₹200 /crore on the
+                  buy side and for equity options stamp duty charges are 0.003%
+                  or ₹300 / crore on the buy side. You can also check the stamp
+                  charges here –
+                  https://upstox.com/calculator/brokerage-calculator/
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+        </Accordion>
+      </Box>
+    </>
+  );
+}
+// function ManualClose() {
+//   const { isOpen, onOpen, onClose } = useDisclosure()
 
-                  ))
-                }
-              </Tbody>
-             
-            </Table>
-          </TableContainer>
-          <Text fontSize={30} color="white" mt={10} textAlign="center">
-            Frequently Asked Questions
-          </Text>
-          <Accordion
-            defaultIndex={[1]}
-            allowMultiple
-            border="none"
-            w="85vw"
-            m="auto"
-          >
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        What is a brokerage calculator?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    A brokerage calculator is an online tool aimed to help the
-                    traders/clients know the exact charges that they might incur
-                    when conducting a trade.
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        How is brokerage calculated?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    You will be charged brokerage of ₹20 per order or 2.5%
-                    (whichever is lower) for buying stocks and selling them after
-                    a few days, weeks, or months. This is called an equity
-                    delivery order. These charges will be applicable to all
-                    customers onboarded on or after 21 September 2021. For
-                    equity/commodity/currency futures and options brokerage, you
-                    can refer to our brokerage charges list Chargeslist
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        What are STT charges?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    For equity delivery, STT is 0.1% on both buying & selling of
-                    shares. For equity intraday, STT is 0.1% on both buying &
-                    selling.
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        How to calculate broker commission?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    You will be charged brokerage of ₹20 per order or 2.5%
-                    (whichever is lower) for buying stocks and selling them after
-                    a few days, weeks, or months. This is called an equity
-                    delivery order. These charges will be applicable to all
-                    customers onboarded on or after 21 September 2021. For
-                    equity/commodity/currency futures and options brokerage, you
-                    can refer to our brokerage charges list
-                    https://upstox.com/chargeslist/ For buying and selling stocks
-                    on the same day, known as equity intraday order, you will be
-                    charged brokerage of ₹20 per order or 0.05% (whichever is
-                    lower) for both buy and sell orders. For
-                    equity/commodity/currency futures and options brokerage, you
-                    can refer to our brokerage charges list
-                    https://upstox.com/chargeslist/ In addition to equity delivery
-                    & equity intraday, brokerage for equity futures is ₹20 per
-                    executed order or 0.05% (whichever is lower) and brokerage for
-                    equity options is flat ₹20 per executed order. We do not
-                    charge any commission/brokerage on Mutual Funds and IPO’s.
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        How to calculate delivery charges?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    You will be charged brokerage of ₹20 per order or 2.5%
-                    (whichever is lower) for buying stocks and selling them after
-                    a few days, weeks, or months. This is called an equity
-                    delivery order. These charges will be applicable to all
-                    customers onboarded on or after 21 September 2021. For
-                    equity/commodity/currency futures and options brokerage, you
-                    can refer to our brokerage charges list –
-                    https://upstox.com/chargeslist/
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <h2>
-                    <AccordionButton>
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        color="white"
-                        fontSize={20}
-                      >
-                        What are state stamp duty charges?
-                      </Box>
-                      {isExpanded ? (
-                        <MinusIcon fontSize="20px" color="white" />
-                      ) : (
-                        <AddIcon fontSize="20px" color="white" />
-                      )}
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} color="black" bg="white">
-                    For equity delivery, stamp duty charges are 0.015% or ₹1500 /
-                    crore on the buy side. For equity intraday, stamp duty charges
-                    are 0.003% or ₹300 / crore on the buy side. For equity
-                    futures, stamp duty charges are 0.002% or ₹200 /crore on the
-                    buy side and for equity options stamp duty charges are 0.003%
-                    or ₹300 / crore on the buy side. You can also check the stamp
-                    charges here –
-                    https://upstox.com/calculator/brokerage-calculator/
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
-        </Box>
-      </>
-    );
-  };
-  // function ManualClose() {
-  //   const { isOpen, onOpen, onClose } = useDisclosure()
-  
-  //   return (
-  //     <>
-  //       <Button onClick={onOpen}>Open Modal</Button>
-  
-  //       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
-  //         <ModalOverlay />
-  //         <ModalContent>
-  //           <ModalHeader>Create your account</ModalHeader>
-  //           <ModalCloseButton />
-  //           <ModalBody pb={6}>
-  //             <Lorem count={2} />
-  //           </ModalBody>
-  
-  //           <ModalFooter>
-  //             <Button colorScheme="blue" mr={3}>
-  //               Save
-  //             </Button>
-  //             <Button onClick={onClose}>Cancel</Button>
-  //           </ModalFooter>
-  //         </ModalContent>
-  //       </Modal>
-  //     </>
-  //   );
-  // }
-  
+//   return (
+//     <>
+//       <Button onClick={onOpen}>Open Modal</Button>
+
+//       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+//         <ModalOverlay />
+//         <ModalContent>
+//           <ModalHeader>Create your account</ModalHeader>
+//           <ModalCloseButton />
+//           <ModalBody pb={6}>
+//             <Lorem count={2} />
+//           </ModalBody>
+
+//           <ModalFooter>
+//             <Button colorScheme="blue" mr={3}>
+//               Save
+//             </Button>
+//             <Button onClick={onClose}>Cancel</Button>
+//           </ModalFooter>
+//         </ModalContent>
+//       </Modal>
+//     </>
+//   );
+// }

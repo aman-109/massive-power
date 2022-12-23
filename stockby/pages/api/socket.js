@@ -6,7 +6,10 @@ const getData=async()=>{
   return res.data
 }
 
-const ioHandler = (req, res) => {
+//       socket.on('hello', msg => {
+//         setInterval(()=>{
+//           let x= Math.floor(Math.random()*60)+40
+//           socket.emit('hello', x);
 
   if (!res.socket.server.io) {
     console.log('*First use, starting socket.io');
@@ -35,17 +38,17 @@ const ioHandler = (req, res) => {
       })
     });
 
-    res.socket.server.io = io;
-  }else {
-    console.log('socket.io already running');
-  }
-  res.end();
-}
+//     res.socket.server.io = io;
+//   }else {
+//     console.log('socket.io already running');
+//   }
+//   res.end();
+// }
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+// export const config = {
+//   api: {
+//     bodyParser: false
+//   }
+ };
 
-export default ioHandler
+// export default ioHandler
