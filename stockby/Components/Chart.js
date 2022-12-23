@@ -4,39 +4,92 @@ import HighchartsReact from "highcharts-react-official";
 
 const StockChart = ({ data }) => {
   const options = {
+    // chart: {
+    //   type: "spline"
+    // },
     chart: {
-      type: "spline"
+      height: 600
     },
+
+    credits: {
+      enabled: false
+    },
+
+    legend: {
+      enabled: true
+    },
+
+    // yAxis: [{
+    //   offset: 20,
+
+    //   labels: {
+    //     // formatter: function () {
+    //     //   return numberFormat.format(data.map(ele=>ele[1]))
+    //     // }
+    //     category:numberFormat.format(data.map(ele=>ele[1]))
+    //     ,
+    //     // x: -15,
+    //     // style: {
+    //     //   "color": "#000", "position": "absolute"
+
+    //     // },
+    //     align: 'left'
+    //   },
+    // },
+
+    // ],
+    xAxis: {
+      type: "date"
+    },
+    // tooltip: {
+    //   shared: true,
+    //   formatter: function () {
+    //     return numberFormat.format(data.map(ele=>ele[1]), 0) +  '</b><br/>' + moment(data.map(ele=>ele[0])).format('MMMM Do YYYY, h:mm')
+    //   }
+    // },
     title: {
       text: "My chart"
     },
     series: [
       {
         data,
-        color: {
-          linearGradient: [1200, 0, 0, 0],
-          stops: [
-            [0, "#00b072"],
-            [1, "#fcc203"]
-          ]
+        name: "Price",
+        type: "spline",
+
+        tooltip: {
+          valueDecimals: 2
         }
+
+        // color: {
+        //   linearGradient: [1200, 0, 0, 0],
+        //   stops: [
+        //     [0, "#00b072"],
+        //     [1, "#fcc203"]
+        //   ]
+        // }
       }
     ],
+    plotOptions: {
+      series: {
+        showInNavigator: true,
+        gapSize: 6
+      }
+    },
     scrollbar: {
-      enabled: false
+      enabled: true
     },
     navigator: {
-      enabled: false
+      enabled: true
     },
     rangeSelector: {
       allButtonsEnabled: true,
-      verticalAlign: "top",
-      buttonPosition: {
-        align: "right"
-      },
-      inputPosition: {
-        align: "left"
-      },
+      // verticalAlign: "top",
+      // buttonPosition: {
+      //   align: "right"
+      // },
+      // inputPosition: {
+      //   align: "left"
+      // },
       buttons: [
         {
           type: "week",
@@ -79,7 +132,7 @@ const StockChart = ({ data }) => {
 
   return (
     <div>
-      <h3>Stock Chart</h3>
+      
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}

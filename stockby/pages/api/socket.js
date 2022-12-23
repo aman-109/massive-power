@@ -1,6 +1,10 @@
 
-
+import axios from "axios"
 import { Server } from 'socket.io';
+const getData=async()=>{
+  let res= await axios("https://financialmodelingprep.com/api/v3/stock/list?apikey=7159bd2ccd38c07c5868c101f5b3160a")
+  return res.data
+}
 
 const ioHandler = (req, res) => {
 
@@ -10,10 +14,25 @@ const ioHandler = (req, res) => {
 
     io.on('connection', (socket) => {
       console.log('Connected socket.io');
-      // socket.emit('a user connected');
+      socket.emit('a user connected');
+      
+      // setInterval(async()=>{
+      //   // let data= await getData()
+      //   socket.emit('data', data);
+
+      // },5000)
+
       socket.on('hello', msg => {
-        socket.emit('hello', 'world!');
+        setInterval(()=>{
+          let x= Math.floor(Math.random()*60)+40
+          socket.emit('hello', x);
+
+        },3000)
+        
       });
+      socket.on('aman',(m)=>{
+        console.log(m)
+      })
     });
 
     res.socket.server.io = io;

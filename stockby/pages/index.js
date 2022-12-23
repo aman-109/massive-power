@@ -6,14 +6,15 @@ import DisplayData from "../Page-Section/body";
 // let socket;
 
 
-function useSocket(url) {
+function useSocket() {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    fetch(url).finally(() => {
+    fetch('/api/socket').finally(() => {
       const socketio = io();
       socketio.on('connect', () => {
         console.log('hii');
         socketio.emit('hello');
+        socketio.emit('aman',"mate");
       });
       // socketio.on('disconnect', () => {
       //   console.log('disconnect');
@@ -29,18 +30,23 @@ function useSocket(url) {
 }
 
 export default function Home() {
-  const socket = useSocket('/api/socketio');
-  console.log(socket)
+  const socket = useSocket();
+  // console.log(socket)
+  const [data,setData]=useState([])
   const [Message,setMessage]=useState('')
   useEffect(() => {
     if (socket) {
+      // socket.on('data',(d)=>{
+      //   // console.log(d);
+      //   setData(d)
+      // })
       socket.on('hello', data => {
-        console.log('hello', data);
+        // console.log('hello', data);
         setMessage(data);
       });
-      // socket.on('a user connected', () => {
-      //   setUser('a user connected');
-      // });
+      socket.on('a user connected', () => {
+        console.log('a user connected');
+      });
     }
   }, [socket]);
   return (
@@ -48,7 +54,7 @@ export default function Home() {
       <Navbar />
       <DisplayData/>
       
-      <h1 >{Message}</h1>
+      {/* <h1 >{Message}</h1> */}
     </>
   );
 }
