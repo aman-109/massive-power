@@ -7,7 +7,7 @@ import Link from "next/link"
 export default function Navbar( ) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     
-console.log(getCookie("token"));
+// console.log(getCookie("token"));
     return (
       <>
         <Box px={4} mb={20} className='ChackraNavBar' shadow='lg' padding='10px' bgColor={"lightblue"}>
